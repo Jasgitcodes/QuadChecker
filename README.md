@@ -44,7 +44,7 @@ Or use a here-document:
 ```bash
 ./quadchecker <<EOF
 o--o
-o  o
+|  |
 o--o
 EOF
 ```
