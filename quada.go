@@ -1,31 +1,29 @@
 package main
 
-import (
-	"github.com/01-edu/z01"
-)
+import "strings"
 
-func QuadA(x, y int) {
+func QuadA(x, y int) string {
 	if x <= 0 || y <= 0 {
-		return
+		return ""
 	}
-
-	for i := 0; i < y; i++ {
-		for j := 0; j < x; j++ {
-			// Determine if we are at a corner
-			if (i == 0 || i == y-1) && (j == 0 || j == x-1) {
-				z01.PrintRune('+')
-			} else if i == 0 || i == y-1 {
-				// Horizontal border
-				z01.PrintRune('-')
-			} else if j == 0 || j == x-1 {
-				// Vertical border
-				z01.PrintRune('|')
+	var res strings.Builder
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 || row == y {
+				if col == 1 || col == x {
+					res.WriteRune('o')
+				} else {
+					res.WriteRune('-')
+				}
 			} else {
-				// Inside
-				z01.PrintRune(' ')
+				if col == 1 || col == x {
+					res.WriteRune('|')
+				} else {
+					res.WriteRune(' ')
+				}
 			}
 		}
-		// Print a newline at the end of each row
-		z01.PrintRune('\n')
+		res.WriteRune('\n')
 	}
+	return res.String()
 }

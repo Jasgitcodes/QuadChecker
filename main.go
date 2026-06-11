@@ -1,84 +1,51 @@
 package main
 
-// import "piscine"
-
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"os"
+	"strings"
 )
-
-var (
-	standardArgs []string
-	x            int
-	y            int
-	name         string
-)
-
-func Atoi(s string) int { // convert ascii to integer
-	n := 0
-
-	for _, number := range s {
-		if number < '0' || n > '9' {
-			return 0
-		}
-
-		n = n*10 + int(number-'0')
-	}
-	return n
-}
-
-func position(s string) int { // helper function to get the length of string for looping
-
-	return len(s)
-}
-
-func ProgramName() string { // helper function to display program name
-	name := os.Args[0]
-
-	end := position(name)
-	start := 0
-
-	for i := end - 1; i >= 0; i-- { // looping from the end of string os.args
-
-		if name[i] == '/' || name[i] == '\\' {
-			start = i + 1
-			break
-		}
-		// programName += string(name[i])
-	}
-
-	var Name string
-
-	for _, char := range name[start:end] { // looping from end of new name to reconvert the string
-		if char == '.' {
-			break
-		}
-		Name += string(char)
-	}
-
-	return Name
-}
 
 func main() {
-	args := os.Args // recieving userinputs
-	if len(args) > 1 && len(args) != 3 {
-		fmt.Println("error")
+	// Step 1: Read from stdin
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := io.ReadAll(reader)
+	content := string(input)
+
+	if strings.TrimSpace(content) == "" {
+		fmt.Println("Not a quad function")
 		return
 	}
 
-	if len(args) == 1 {
-		fmt.Println(ProgramName())
-		return
+	lines := strings.Split(strings.TrimRight(content, "\n"), "\n")
+	y := len(lines)
+	x := len([]rune(lines[0]))
+
+	matches := []string{}
+
+	// Step 2: Compare input to each quad
+	if content == QuadA(x, y) {
+		matches = append(matches, fmt.Sprintf("[quadA] [%d] [%d]", x, y))
 	}
-	// name = args[0]
-
-	if len(args[1:]) == 2 {
-		// name := ProgramName()
-
-		x = Atoi(args[1])
-		y = Atoi(args[2])
-		// fmt.Printf("[%v] [%v] [%v]", name, x, y)
-		QuadA(x, y)
+	if content == QuadB(x, y) {
+		matches = append(matches, fmt.Sprintf("[quadB] [%d] [%d]", x, y))
+	}
+	if content == QuadC(x, y) {
+		matches = append(matches, fmt.Sprintf("[quadC] [%d] [%d]", x, y))
+	}
+	if content == QuadD(x, y) {
+		matches = append(matches, fmt.Sprintf("[quadD] [%d] [%d]", x, y))
+	}
+	if content == QuadE(x, y) {
+		matches = append(matches, fmt.Sprintf("[quadE] [%d] [%d]", x, y))
 	}
 
+	// Step 3: Print result
+	if len(matches) == 0 {
+		fmt.Println("Not a quad function")
+	} else {
+		fmt.Println(strings.Join(matches, " || "))
+	}
 }

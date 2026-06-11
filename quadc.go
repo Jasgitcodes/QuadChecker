@@ -1,31 +1,25 @@
 package main
 
-import "github.com/01-edu/z01"
+import "strings"
 
-func QuadC(x, y int) {
+func QuadC(x, y int) string {
 	if x <= 0 || y <= 0 {
-		return
+		return ""
 	}
-
-	dy := y - 1
-	dx := x - 1
-	for row := 0; row < y; row++ {
-		for column := 0; column < x; column++ {
-			if row == 0 && column == 0 {
-				z01.PrintRune('A')
-			} else if row == 0 && column == dx {
-				z01.PrintRune('A')
-			} else if row == dy && column == 0 {
-				z01.PrintRune('C')
-			} else if row == dy && column == dx {
-				z01.PrintRune('C')
-			} else if row == 0 || row == dy || column == 0 || column == dx {
-				z01.PrintRune('B')
+	var res strings.Builder
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && (col == 1 || col == x) {
+				res.WriteRune('A')
+			} else if row == y && (col == 1 || col == x) {
+				res.WriteRune('C')
+			} else if row == 1 || row == y || col == 1 || col == x {
+				res.WriteRune('B')
 			} else {
-				z01.PrintRune(' ')
+				res.WriteRune(' ')
 			}
 		}
-
-		z01.PrintRune('\n')
+		res.WriteRune('\n')
 	}
+	return res.String()
 }

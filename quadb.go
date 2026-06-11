@@ -1,29 +1,29 @@
 package main
 
-import "github.com/01-edu/z01"
+import "strings"
 
-func QuadB(x, y int) {
+func QuadB(x, y int) string {
 	if x <= 0 || y <= 0 {
-		return
+		return ""
 	}
-
-	for row := 0; row < y; row++ {
-		for column := 0; column < x; column++ {
-			if row == 0 && column == 0 {
-				z01.PrintRune('/')
-			} else if row == 0 && column == x-1 {
-				z01.PrintRune('\\')
-			} else if row == y-1 && column == 0 {
-				z01.PrintRune('\\')
-			} else if row == y-1 && column == x-1 {
-				z01.PrintRune('/')
-			} else if row == 0 || row == y-1 || column == 0 || column == x-1 {
-				z01.PrintRune('*')
+	var res strings.Builder
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 {
+				res.WriteRune('/')
+			} else if row == 1 && col == x {
+				res.WriteRune('\\')
+			} else if row == y && col == 1 {
+				res.WriteRune('\\')
+			} else if row == y && col == x {
+				res.WriteRune('/')
+			} else if row == 1 || row == y || col == 1 || col == x {
+				res.WriteRune('*')
 			} else {
-				z01.PrintRune(' ')
+				res.WriteRune(' ')
 			}
 		}
-
-		z01.PrintRune('\n')
+		res.WriteRune('\n')
 	}
+	return res.String()
 }

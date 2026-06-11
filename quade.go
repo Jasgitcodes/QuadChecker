@@ -1,36 +1,27 @@
 package main
 
-import (
-	"github.com/01-edu/z01"
-)
+import "strings"
 
-func QuadE(x, y int) {
+func QuadE(x, y int) string {
 	if x <= 0 || y <= 0 {
-		return
+		return ""
 	}
-
-	dx := x - 1
-	dy := y - 1
-	for row := 0; row < y; row++ {
-		for column := 0; column < x; column++ {
-			if row == 0 && column == 0 {
-				z01.PrintRune('A')
-			} else if row == 0 && column == dx {
-				z01.PrintRune('C')
-			} else if row == dy && column == 0 {
-				z01.PrintRune('C')
-			} else if row == dy && column == dx {
-				// z01.PrintRune('A')
-				z01.PrintRune('A')
-			} else if row == 0 || column == 0 || row == dy || column == dx {
-				// fmt.Print("B")
-				z01.PrintRune('B')
+	var res strings.Builder
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && (col == 1 || col == x) {
+				res.WriteRune('A')
+			} else if row == y && (col == 1 || col == x) {
+				res.WriteRune('C')
+			} else if row == 1 || row == y {
+				res.WriteRune('B')
+			} else if col == 1 || col == x {
+				res.WriteRune('B')
 			} else {
-				// fmt.Print(" ")
-				z01.PrintRune(' ')
+				res.WriteRune(' ')
 			}
 		}
-
-		z01.PrintRune('\n')
+		res.WriteRune('\n')
 	}
+	return res.String()
 }
